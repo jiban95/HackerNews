@@ -1,10 +1,10 @@
 package com.example.demoapp.hilt
 
 import androidx.viewbinding.BuildConfig
+import com.example.demoapp.BuildConfig.BASE_URL
 import com.example.demoapp.data.remote.ApiInterface
 import com.example.demoapp.data.repository.ArticlesRepositoryImpl
 import com.example.demoapp.domain.repository.ArticlesRepository
-import com.example.demoapp.utils.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
