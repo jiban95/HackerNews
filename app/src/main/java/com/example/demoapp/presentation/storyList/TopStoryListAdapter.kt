@@ -1,4 +1,4 @@
-package com.example.demoapp.presentation.topStoryIdList
+package com.example.demoapp.presentation.storyList
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoapp.R
 import com.example.demoapp.data.model.ArticlesDetailsRes
-import com.example.demoapp.presentation.MainActivity
 
 class TopStoryListAdapter(
     private val listener: MainActivity,

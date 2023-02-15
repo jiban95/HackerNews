@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">DemoApp</string>
-    <string name="top">Top</string>
+    <string name="top">Top Story</string>
     <string name="story_details">Story Details</string>
 </resources>

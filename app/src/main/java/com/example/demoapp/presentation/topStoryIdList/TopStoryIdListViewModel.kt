@@ -18,7 +18,7 @@ class TopStoryIdListViewModel @Inject constructor(private val useCases: TopArtic
     private val _articleIdList = MutableStateFlow(TopStoryDataState())
     val articleIdList: StateFlow<TopStoryDataState> = _articleIdList
 
-    fun getNewsData() {
+    fun getTopArticlesIdList() {
         useCases().onEach {
             when (it) {
                 is Resource.Loading -> {

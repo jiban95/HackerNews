@@ -1,7 +1,8 @@
-package com.example.demoapp.presentation
+package com.example.demoapp.presentation.storyList
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,9 +12,7 @@ import com.example.demoapp.data.model.ArticlesDetailsRes
 import com.example.demoapp.databinding.ActivityMainBinding
 
 import com.example.demoapp.presentation.storyDetails.StoryDetailsActivity
-import com.example.demoapp.presentation.storyList.StoryDetailsListViewModel
 import com.example.demoapp.presentation.topStoryIdList.TopStoryIdListViewModel
-import com.example.demoapp.presentation.topStoryIdList.TopStoryListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,13 +28,12 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
     private var dataCountEnd = 10
     private var eachDataSet = 10
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        topStoryIdViewModel.getNewsData()
+        topStoryIdViewModel.getTopArticlesIdList() // call the method of TopStoryIdListViewModel to get topStoryIds
         lifecycle.coroutineScope.launchWhenStarted {
             topStoryIdViewModel.articleIdList.collect {
 
@@ -51,7 +49,7 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                 it.data?.let { it1 ->
                     if (it1.isNotEmpty()) {
                         idList = it.data
-                        getIdData()
+                        getMoreData()
                     }
                 }
             }
@@ -62,24 +60,35 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
             if (scrollY == binding!!.nScrollView.getChildAt(0).measuredHeight - v.measuredHeight) {
                 pageCount++
                 binding!!.loaderMore.visibility = View.VISIBLE
-                if (pageCount < 50) {
-                    getIdData()
+                if (pageCount < idList.size) {
+                    getMoreData()
                 }
             }
         }
     }
 
-    private fun getIdData() {
+    /*
+      method to load 10 id per each scroll and pass the ids to get story details
+     */
+    private fun getMoreData() {
         if (idList.size > 0) {
             idListCopy.clear()
-            for (i in dataCountStart until dataCountEnd - 1) {
-                idListCopy.add(idList[i])
+
+            if (pageCount == 1) {
+                for (i in dataCountStart until dataCountEnd - 1) {
+                    idListCopy.add(idList[i])
+                }
+                dataCountStart = dataCountEnd
+                dataCountEnd = pageCount * eachDataSet
+            } else {
+                dataCountStart = dataCountEnd
+                dataCountEnd = pageCount * eachDataSet
+                for (i in dataCountStart until dataCountEnd - 1) {
+                    idListCopy.add(idList[i])
+                }
             }
 
-            dataCountStart = dataCountEnd
-            dataCountEnd = pageCount * eachDataSet
-
-            storyDetailsViewModel.getNewsData(idListCopy) // call the method of viewModel to call topStoryDetails api
+            storyDetailsViewModel.getNewsData(idListCopy) // call the method of StoryDetailsListViewModel to get topStoryDetails
 
             lifecycle.coroutineScope.launchWhenCreated {
                 storyDetailsViewModel.articleDetails.collect {

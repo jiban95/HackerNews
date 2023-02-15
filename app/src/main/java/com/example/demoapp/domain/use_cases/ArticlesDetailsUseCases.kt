@@ -15,11 +15,14 @@ import javax.inject.Inject
  */
 
 class ArticlesDetailsUseCases @Inject constructor(private val articlesRepository: ArticlesRepository) {
-    private var data: MutableList<ArticlesDetailsRes> = ArrayList()
+    private lateinit var data: MutableList<ArticlesDetailsRes>
 
     operator fun invoke(idList: MutableList<Int>): Flow<Resource<List<ArticlesDetailsRes>>> = flow {
         try {
-            emit(Resource.Loading())
+
+            data = ArrayList()
+            data.clear()
+
             idList.forEach { id ->
                 data.add(articlesRepository.getTopArticlesDetails(id))
             }
@@ -29,8 +32,7 @@ class ArticlesDetailsUseCases @Inject constructor(private val articlesRepository
         } catch (e: IOException) {
             emit(Resource.Error(message = e.localizedMessage ?: "Check Connectivity"))
         } catch (e: Exception) {
-            emit(Resource.Error(message = e.localizedMessage ?: e.localizedMessage))
-            e.localizedMessage?.let { Log.e("error", it) }
+            e.localizedMessage?.let { emit(Resource.Error(message = it)) }
         }
     }
 }
