@@ -63,9 +63,6 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                 }
             }
         }
-
-        val topStoryListAdapter = TopStoryListAdapter(this@MainActivity, articleDetailsList)
-        binding!!.mRecycler.adapter = topStoryListAdapter
     }
 
     /*
@@ -102,7 +99,9 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                         data.forEach { i ->
                             articleDetailsList.add(i)
                         }
-
+                        val topStoryListAdapter = TopStoryListAdapter(this@MainActivity, articleDetailsList)
+                        binding!!.mRecycler.adapter = topStoryListAdapter
+                        topStoryListAdapter.notifyDataSetChanged()
                         binding!!.loader.visibility = View.INVISIBLE
                     }
                 }
