@@ -1,6 +1,5 @@
 package com.example.demoapp.presentation.storyList
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.demoapp.domain.use_cases.ArticlesDetailsUseCases
@@ -12,6 +11,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+/*
+ This viewModel class fetch articlesDetails from api and also manage state of the data
+ */
 @HiltViewModel
 class StoryDetailsListViewModel @Inject constructor(private val articlesDetailsUseCases: ArticlesDetailsUseCases) :
     ViewModel() {

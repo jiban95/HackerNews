@@ -8,7 +8,13 @@ import com.example.demoapp.data.model.TopArticlesIdRes
  */
 interface ArticlesRepository {
 
+    /*
+      This function returns TopArticlesIdRes as result
+      */
     suspend fun getTopArticlesIdList(): TopArticlesIdRes
 
-    suspend fun getTopArticlesDetails(id:Int): ArticlesDetailsRes
+    /*
+      This function takes article id as parameter and returns ArticlesDetailsRes as result
+     */
+    suspend fun getTopArticlesDetails(id: Int): ArticlesDetailsRes
 }

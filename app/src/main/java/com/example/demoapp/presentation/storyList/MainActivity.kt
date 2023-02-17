@@ -2,7 +2,6 @@ package com.example.demoapp.presentation.storyList
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.coroutineScope
 import com.example.demoapp.data.model.ArticlesDetailsRes
 import com.example.demoapp.databinding.ActivityMainBinding
-
 import com.example.demoapp.presentation.storyDetails.StoryDetailsActivity
 import com.example.demoapp.presentation.topStoryIdList.TopStoryIdListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,6 +63,9 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                 }
             }
         }
+
+        val topStoryListAdapter = TopStoryListAdapter(this@MainActivity, articleDetailsList)
+        binding!!.mRecycler.adapter = topStoryListAdapter
     }
 
     /*
@@ -101,9 +102,7 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                         data.forEach { i ->
                             articleDetailsList.add(i)
                         }
-                        val topStoryListAdapter =
-                            TopStoryListAdapter(this@MainActivity, articleDetailsList)
-                        binding!!.mRecycler.adapter = topStoryListAdapter
+
                         binding!!.loader.visibility = View.INVISIBLE
                     }
                 }

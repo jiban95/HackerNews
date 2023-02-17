@@ -5,6 +5,9 @@ import com.example.demoapp.data.model.TopArticlesIdRes
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/*
+   This interface represents api endpoints
+ */
 interface ApiInterface {
 
     @GET("topstories.json?print=pretty")

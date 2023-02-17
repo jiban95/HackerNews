@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
+/*
+ This viewModel class fetch articlesIdList from api and also manage state of the data
+ */
 @HiltViewModel
 class TopStoryIdListViewModel @Inject constructor(private val useCases: TopArticlesIdUseCases) :
     ViewModel() {
