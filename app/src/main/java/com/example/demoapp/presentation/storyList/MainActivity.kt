@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
     private var dataCountEnd = 10
     private var eachDataSet = 10
 
+    lateinit var topStoryListAdapter: TopStoryListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -63,6 +65,8 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                 }
             }
         }
+        topStoryListAdapter = TopStoryListAdapter(this@MainActivity, articleDetailsList)
+        binding!!.mRecycler.adapter = topStoryListAdapter
     }
 
     /*
@@ -99,8 +103,6 @@ class MainActivity : AppCompatActivity(), TopStoryListAdapter.AdapterItemClick {
                         data.forEach { i ->
                             articleDetailsList.add(i)
                         }
-                        val topStoryListAdapter = TopStoryListAdapter(this@MainActivity, articleDetailsList)
-                        binding!!.mRecycler.adapter = topStoryListAdapter
                         topStoryListAdapter.notifyDataSetChanged()
                         binding!!.loader.visibility = View.INVISIBLE
                     }
